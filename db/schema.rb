@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_113531) do
+ActiveRecord::Schema.define(version: 2021_10_07_114030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,10 +21,22 @@ ActiveRecord::Schema.define(version: 2021_10_07_113531) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "quotes", force: :cascade do |t|
+    t.bigint "author_id", null: false
+    t.bigint "topic_id", null: false
+    t.string "quote"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_quotes_on_author_id"
+    t.index ["topic_id"], name: "index_quotes_on_topic_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "quotes", "authors"
+  add_foreign_key "quotes", "topics"
 end
